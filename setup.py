@@ -14,8 +14,7 @@ with open('requirements.txt') as f:
 setup(
     name='beatrest',
     version='0.1',
-    packages=find_packages('beatrest', exclude=('tests',)),
-    package_dir={'': 'beatrest'},
+    packages=['beatrest'],
     include_package_data=True,
     zip_safe=False,
     description=(

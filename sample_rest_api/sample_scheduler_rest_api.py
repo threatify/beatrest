@@ -1,11 +1,6 @@
-from .bottle import Bottle, route, run, request, response, error, abort
+from bottle import Bottle, route, run, request, response, error, abort
 import json
-import sys
 
-reload(sys)
-sys.setdefaultencoding('utf8')
-
-import logging
 debug = False
 
 # MIME Types
@@ -29,6 +24,8 @@ def enable_cors():
 def get_schedule():
 
     schedule = {}
+
+    return schedule
 
 
 if __name__ == "__main__":
