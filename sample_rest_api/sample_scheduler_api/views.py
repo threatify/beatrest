@@ -15,13 +15,40 @@ class SchedulerAPI(APIBase):
         ]
     }
 
-    @view_config(request_method=("GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"))
+    @view_config(request_method=(
+        "GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"))
     def request_handler(self):
+        # print(self.request)
         return self.handle_request()
 
     def get_schedules(self):
         print("get_schedules called!")
-        return {}
+        schedules = {
+            'add-every-5-seconds': {
+                'task': 'beatrest.debug.debug_print',
+                'type': 'interval',
+                'value': 5.0,
+                'args': ('hello from celery', ),
+                'options': {'queue': 'tr', 'routing_key': 'tr'}
+            },
+            # 'print-msg-every-5-seconds': {
+            #     'task': 'print',
+            #     'type': 'interval',
+            #     'value': 5.0,
+            #     'args': ('hello from celery', ),
+            #     'options': {'queue': 'tr', 'routing_key': 'tr'}
+            # },
+            'run-every-minute': {
+                'task': 'beatrest.debug.file_debug',
+                'type': 'crontab',
+                'value': {'minute': '*'},  # run every minute
+                'args': ('/tmp/beatrest_messages.txt', 'hello from crontab'),
+                'last_run_at': '2018-10-01T14:43:56.812202',
+                'options': {'queue': 'tr', 'routing_key': 'tr'}
+            }
+        }
+
+        return schedules
 
     def set_schedules(self):
 
